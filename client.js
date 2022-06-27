@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const sleep = require('util').promisify(setTimeout)
-let i = 0;
+let i = 1;
 
 function myFunc() {
     const prodArr = [
@@ -240,7 +240,7 @@ function myFunc() {
 (async () => {
     for (let i = 0; i< 100; i++){
         console.time("Slept for")
-        await sleep(1000)
+        await sleep(4000)
         console.timeEnd("Slept for")
         myFunc();
     }
