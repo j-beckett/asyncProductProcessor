@@ -21,7 +21,7 @@ function myFunc() {
             "product_configurable_fields": {
               "name": "MAC",
               "uom": "GRAMS",
-              "brand": "22 RED",
+              "brand": "22 RED BRO",
               "size": null,
               "amount": 3.5,
               "classification": "HYBRID",
@@ -217,7 +217,7 @@ function myFunc() {
     setTimeout(() => {console.log("loop start. i is:" + i);
     let topost;
     if (i%10 === 0 ){
-        topost = { product_id: 'TEST', productName: 'sushi'} ;
+        topost = { product_id: 'TEST', category_type: 'sushi', product_configurable_fields: {name: "rainbowRoll", brand: "Jens Best"}, pricing: {price_type: "fixed", price_sell: 420} } ;
     }
     else {
         topost = prodArr[i%3];
@@ -240,7 +240,7 @@ function myFunc() {
 (async () => {
     for (let i = 0; i< 100; i++){
         console.time("Slept for")
-        await sleep(4000)
+        await sleep(500)
         console.timeEnd("Slept for")
         myFunc();
     }

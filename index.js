@@ -10,9 +10,10 @@ let productArr = [];
 const app = express()
 const PORT = 3001
 
-const TIME_TO_SEND = 2000;
+const TIME_TO_SEND = 4000;
 
 //the timer at a certain ID has expired. Prints the ID of which product expires to the console
+//now includes some functionality to call another file to insert to DB. (not working)
 async function timeUp(product) {
   console.log("THE TIME ENDED!!! Send data now for:"+ product.product_id);
 
@@ -33,6 +34,8 @@ async function timeUp(product) {
   //   "price": product.pricing.price_sell
   
   // };
+
+  //formatting data for insertion to DB. Currently DB insertion not working 
   let itemForDB = [
     product.product_id, 
     product.product_status,
@@ -43,7 +46,7 @@ async function timeUp(product) {
   ];
 
   //send the formatted object off to this function to upsert the db
-  await pgDB.qwerty(itemForDB);
+  await pgDB.connectToDB(itemForDB);
 }
 
 //this function returns the ID from a timer being set. 
