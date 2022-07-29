@@ -240,7 +240,7 @@ function myFunc() {
 (async () => {
     for (let i = 0; i< 100; i++){
         console.time("Slept for")
-        await sleep(500)
+        await sleep(2000)
         console.timeEnd("Slept for")
         myFunc();
     }

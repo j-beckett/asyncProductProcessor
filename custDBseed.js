@@ -14,23 +14,27 @@ const pool = new Pool({
     user: process.env.POSTGRESQL_DB_USER,
     host: process.env.POSTGRESQL_DB_HOST,
     database: process.env.POSTGRESQL_DB,
-    password: process.env.POSTGRESQL_DB_PASSWORD,
+    password: process.env.POSTGRESQL_DB,
     port: process.env.POSTGRESQL_DB_PORT
 });
 
+
+const TABLE_NAME = "public.\"node_customers_test\"";
 //
 
-async function insertData(productData, pool){
+async function insertData(custData, pool){
 
     //Establish a new client. Don't forget to free the client with release() afterwards !
     const client = await pool.connect();
 
     try{
         //this try block does the actual query to the PG DB
+
+        //assumption: this fits in the registered name to billing first name / last name. could be changed
         try{
             const response = await client.query(
-                "INSERT INTO public.\"Node_Products_Test\" (product_id, category, name, brand, price_type, price) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (product_id) DO UPDATE SET category = EXCLUDED.category, name = EXCLUDED.name, brand = EXCLUDED.brand, price_type = EXCLUDED.price_type, price = EXCLUDED.price" ,
-                productData
+                "INSERT INTO public.\"node_customers_test\" (\"WooCustomerId\", \"Email\", \"FirstName\", \"LastName\", treez_customer_id, \"BillingAddress_FirstName\", \"BillingAddress_LastName\", \"BillingAddress_State\", \"BillingAddress_City\", \"BillingAddress_Address1\", \"BillingAddress_Address2\" , \"BillingAddress_Postcode\", \"BillingAddress_Email\", \"OriginalPlatform\", \"VerificationStatus\", gender, birthdate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) ON CONFLICT (treez_customer_id) DO UPDATE SET \"WooCustomerId\" = EXCLUDED.\"WooCustomerId\" , \"Email\" = EXCLUDED.\"Email\" , \"FirstName\" = EXCLUDED.\"FirstName\" , \"LastName\" = EXCLUDED.\"LastName\" , \"Role\"  = EXCLUDED.\"Role\" , \"Username\"  = EXCLUDED.\"Username\"  " ,
+                custData
             );
 
             console.log(response);
@@ -40,6 +44,8 @@ async function insertData(productData, pool){
             console.log("error upserting into the PG table")
             throw err;
         }
+
+        console.log("Inserted or Updated a product into the table.")
     }
 
     catch(err){
@@ -62,7 +68,7 @@ async function insertData(productData, pool){
    //console.log(response.rows);
     
 
-    console.log("Inserted or Updated a product into the table.")
+    
     //client.release();
     //pool.end()
     // .then(() => console.pool has disconnected'))

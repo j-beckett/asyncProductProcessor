@@ -10,7 +10,7 @@ let productArr = [];
 const app = express()
 const PORT = 3001
 
-const TIME_TO_SEND = 4000;
+const TIME_TO_SEND = 3000;
 
 //the timer at a certain ID has expired. Prints the ID of which product expires to the console
 //now includes some functionality to call another file to insert to DB. (not working)
