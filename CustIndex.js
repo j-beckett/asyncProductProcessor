@@ -78,7 +78,10 @@ async function formatIt(object) {
 }
 
 
-
+// respond with "hello world" when a GET request is made to the homepage
+app.get('/', (req, res) => {
+  res.send('hello world')
+})
   
 app.post("/customer" , (req, res) => {
     let incomingData = req.body.data;

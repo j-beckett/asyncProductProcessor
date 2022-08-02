@@ -65,7 +65,11 @@ app.use(bodyParser.json())
 //     res.status(200).end() // Responding is important
 // })
 
-  
+// respond with "hello world" when a GET request is made to the homepage
+app.get('/', (req, res) => {
+  res.send('hello world')
+})
+
 app.post("/product" , (req, res) => {
     let incomingProductID = req.body.product_id;
 
