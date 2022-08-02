@@ -21,6 +21,16 @@ async function formatIt(object) {
     //assumption: Treez does not define an address as "billing address"
     //so here, I will take the first address on the record as "billing".
     //actually should be solved to check if primary == true. to do 
+
+
+    let customerMemTypes = "";
+
+    object.customer_groups.forEach((custType) => {
+      customerMemTypes += custType;
+      customerMemTypes += " , ";
+    });
+    
+    
     const itemForDB = [
         null,
         object.email,
@@ -39,12 +49,16 @@ async function formatIt(object) {
         object.verification_status ,
         object.gender,
         object.birthday,
+        object.banned,
         object.drivers_license,
         object.drivers_license_expiration,
         object.permit_expiration,
         object.warning_1,
         object.warning_2,
-        object.nickname
+        object.status,
+        object.nickname,
+        object.notes,
+        object.patient_type + " , " + customerMemTypes
     ];
 
     pgDB.connectToDB(itemForDB);

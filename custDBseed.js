@@ -14,7 +14,7 @@ const pool = new Pool({
     user: process.env.POSTGRESQL_DB_USER,
     host: process.env.POSTGRESQL_DB_HOST,
     database: process.env.POSTGRESQL_DB,
-    password: process.env.POSTGRESQL_DB,
+    password: process.env.POSTGRESQL_DB_PASSWORD,
     port: process.env.POSTGRESQL_DB_PORT
 });
 
@@ -33,7 +33,7 @@ async function insertData(custData, pool){
         //assumption: this fits in the registered name to billing first name / last name. could be changed
         try{
             const response = await client.query(
-                "INSERT INTO public.\"node_customers_test\" (\"WooCustomerId\", \"Email\", \"FirstName\", \"LastName\", treez_customer_id, \"BillingAddress_FirstName\", \"BillingAddress_LastName\", \"BillingAddress_State\", \"BillingAddress_City\", \"BillingAddress_Address1\", \"BillingAddress_Address2\" , \"BillingAddress_Postcode\", \"BillingAddress_Email\", \"OriginalPlatform\", \"VerificationStatus\", gender, birthdate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) ON CONFLICT (treez_customer_id) DO UPDATE SET \"WooCustomerId\" = EXCLUDED.\"WooCustomerId\" , \"Email\" = EXCLUDED.\"Email\" , \"FirstName\" = EXCLUDED.\"FirstName\" , \"LastName\" = EXCLUDED.\"LastName\" , \"Role\"  = EXCLUDED.\"Role\" , \"Username\"  = EXCLUDED.\"Username\"  " ,
+                "INSERT INTO public.\"node_customers_test\" (\"WooCustomerId\", \"Email\", \"FirstName\", \"LastName\", treez_customer_id, \"BillingAddress_FirstName\", \"BillingAddress_LastName\", \"BillingAddress_State\", \"BillingAddress_City\", \"BillingAddress_Address1\", \"BillingAddress_Address2\" , \"BillingAddress_Postcode\", \"BillingAddress_Email\", \"OriginalPlatform\", \"VerificationStatus\", gender, birthdate, banned, drivers_license_number, drivers_license_expiration, permit_expiration, warning_1, warning_2, status, nickname, notes, membership_details  ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27) ON CONFLICT (treez_customer_id) DO UPDATE SET \"WooCustomerId\" = EXCLUDED.\"WooCustomerId\" , \"Email\" = EXCLUDED.\"Email\" , \"FirstName\" = EXCLUDED.\"FirstName\" , \"LastName\" = EXCLUDED.\"LastName\" , \"Role\"  = EXCLUDED.\"Role\" , \"Username\"  = EXCLUDED.\"Username\"  " ,
                 custData
             );
 
@@ -45,7 +45,7 @@ async function insertData(custData, pool){
             throw err;
         }
 
-        console.log("Inserted or Updated a product into the table.")
+        console.log("Inserted or Updated a Customer into the table.")
     }
 
     catch(err){
